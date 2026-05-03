@@ -1,0 +1,14 @@
+*.tmp
+*.log
+
+# Local generation or review artifacts.
+pet-runs/
+generated_images/
+prompts/
+decoded/
+frames/
+imagegen-jobs.json
+pet_request.json
+validation.json
+review.json
+run-summary.json
