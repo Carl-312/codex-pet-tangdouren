@@ -4,6 +4,9 @@
 
 This is a custom Codex App pet packaged for easy local installation.
 
+<img width="641" height="345" alt="image" src="https://github.com/user-attachments/assets/9d5ee162-50df-48c4-9b53-97d4aa683b93" />
+
+
 ![Tangdouren preview](preview/screenshot.png)
 
 ## 简介
