@@ -5,8 +5,8 @@ param(
 $ErrorActionPreference = "Stop"
 
 $RepoRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
-$Source = Join-Path $RepoRoot "pets\bighead-girl"
-$Destination = Join-Path $CodexHome "pets\bighead-girl"
+$Source = Join-Path $RepoRoot "pets\tangdouren"
+$Destination = Join-Path $CodexHome "pets\tangdouren"
 
 if (-not (Test-Path -LiteralPath $Source)) {
     throw "Pet files were not found at: $Source"

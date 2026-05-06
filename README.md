@@ -41,7 +41,7 @@ This is a custom Codex App pet packaged for easy local installation.
 脚本会把宠物文件复制到：
 
 ```text
-${CODEX_HOME:-$HOME/.codex}/pets/bighead-girl/
+${CODEX_HOME:-$HOME/.codex}/pets/tangdouren/
 ```
 
 安装后，打开 Codex App 设置页，从本地 Codex home 刷新自定义宠物即可。
@@ -51,19 +51,19 @@ ${CODEX_HOME:-$HOME/.codex}/pets/bighead-girl/
 复制这个目录：
 
 ```text
-pets/bighead-girl
+pets/tangdouren
 ```
 
 到默认 Codex home：
 
 ```text
-$HOME/.codex/pets/bighead-girl
+$HOME/.codex/pets/tangdouren
 ```
 
 如果你设置了自定义 `CODEX_HOME`，复制到：
 
 ```text
-$CODEX_HOME/pets/bighead-girl
+$CODEX_HOME/pets/tangdouren
 ```
 
 ## 文件内容
@@ -72,7 +72,7 @@ $CODEX_HOME/pets/bighead-girl
 
 ```text
 pets/
-  bighead-girl/
+  tangdouren/
     pet.json
     spritesheet.webp
 ```
