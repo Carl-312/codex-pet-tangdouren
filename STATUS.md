@@ -30,7 +30,9 @@ Last verified: 2026-05-09
 
 ## Latest Fix
 
-The previous `running-right` row had a too-wide crop envelope and could appear as stacked layers during app playback. The current `running-right` row was rebuilt by clearing row 1 and then writing clean, exact horizontal mirrors of the known-good `running-left` frames.
+The previous `running-right` row had a too-wide crop envelope and could appear as stacked layers during app playback. That row remains fixed and was not visually changed in the latest pass.
+
+The latest pass focused on states that could be mistaken for static or semantically similar animations. `waving`, `running`, and `review` were conservatively repaired by reusing existing generated frames with stronger within-cell motion. `jumping`, `running-right`, and `running-left` were left visually unchanged.
 
 ## Verification
 
@@ -39,8 +41,9 @@ Latest local checks passed:
 - `validate_atlas.py`: ok, no warnings.
 - Used cells: 57/57 non-empty.
 - Unused cells: 15/15 fully transparent.
-- `running-right`: exact frame-by-frame mirror of `running-left`.
+- Browser/WebP decode: `1536x1872`, RGBA-capable; unused cell alpha sampled as `0`.
 - Browser preview: all 9 states load from `spritesheet.webp` using `192x208` background-position cropping.
+- Motion scores after latest pass: `waving` 29, `running` 36, `review` 19, `waiting` 19, `idle` 12.
 - Local install verified at `C:\Users\Carl\.codex\pets\tangdouren\`.
 
 Preview files:
