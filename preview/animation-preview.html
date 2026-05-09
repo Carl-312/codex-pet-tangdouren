@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tangdouren Animation Preview</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --cell-w: 192px;
+      --cell-h: 208px;
+      --sheet-w: 1536px;
+      --sheet-h: 1872px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f5f7;
+      color: #15181d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: 20px;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+      gap: 16px;
+      max-width: 900px;
+    }
+
+    .state {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px 12px;
+      align-items: center;
+      min-height: 248px;
+      padding: 12px;
+      border: 1px solid #d9dde5;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .sprite {
+      width: var(--cell-w);
+      height: var(--cell-h);
+      overflow: hidden;
+      background-image: url("../pets/tangdouren/spritesheet.webp");
+      background-repeat: no-repeat;
+      background-size: var(--sheet-w) var(--sheet-h);
+      image-rendering: auto;
+    }
+
+    .meta {
+      align-self: start;
+      min-width: 0;
+    }
+
+    .name {
+      font-size: 13px;
+      font-weight: 650;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+
+    .details {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 1.35;
+      color: #596171;
+    }
+
+    .frame {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: #eef1f5;
+      color: #2a303a;
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 14px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Tangdouren sprite renderer preview</h1>
+  <main class="grid" id="preview"></main>
+  <script>
+    const CELL_W = 192;
+    const CELL_H = 208;
+    const states = [
+      { name: "idle", row: 0, frames: 6, durations: [280, 110, 110, 140, 140, 320] },
+      { name: "running-right", row: 1, frames: 8, durations: [120, 120, 120, 120, 120, 120, 120, 220] },
+      { name: "running-left", row: 2, frames: 8, durations: [120, 120, 120, 120, 120, 120, 120, 220] },
+      { name: "waving", row: 3, frames: 4, durations: [140, 140, 140, 280] },
+      { name: "jumping", row: 4, frames: 5, durations: [140, 140, 140, 140, 280] },
+      { name: "failed", row: 5, frames: 8, durations: [140, 140, 140, 140, 140, 140, 140, 240] },
+      { name: "waiting", row: 6, frames: 6, durations: [150, 150, 150, 150, 150, 260] },
+      { name: "running", row: 7, frames: 6, durations: [120, 120, 120, 120, 120, 220] },
+      { name: "review", row: 8, frames: 6, durations: [150, 150, 150, 150, 150, 280] }
+    ];
+
+    const root = document.getElementById("preview");
+
+    for (const state of states) {
+      const card = document.createElement("section");
+      card.className = "state";
+      card.dataset.state = state.name;
+
+      const sprite = document.createElement("div");
+      sprite.className = "sprite";
+      sprite.dataset.row = String(state.row);
+      sprite.dataset.frames = String(state.frames);
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.innerHTML = `
+        <div class="name">${state.name}</div>
+        <div class="details">row ${state.row}, ${state.frames} frames, 192x208 cell</div>
+        <div class="frame" data-frame>frame 0</div>
+      `;
+
+      card.append(sprite, meta);
+      root.append(card);
+    }
+
+    function frameAt(state, elapsed) {
+      const total = state.durations.reduce((sum, value) => sum + value, 0);
+      let t = elapsed % total;
+      for (let index = 0; index < state.durations.length; index += 1) {
+        if (t < state.durations[index]) {
+          return index;
+        }
+        t -= state.durations[index];
+      }
+      return state.frames - 1;
+    }
+
+    function tick(now) {
+      for (const state of states) {
+        const card = root.querySelector(`[data-state="${state.name}"]`);
+        const sprite = card.querySelector(".sprite");
+        const label = card.querySelector("[data-frame]");
+        const frame = frameAt(state, now);
+        sprite.style.backgroundPosition = `${-frame * CELL_W}px ${-state.row * CELL_H}px`;
+        label.textContent = `frame ${frame}`;
+      }
+      requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>

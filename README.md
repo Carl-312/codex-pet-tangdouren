@@ -79,6 +79,8 @@ pets/
 
 `preview/` 目录只用于 GitHub 页面展示，不影响安装。
 
+当前修复和验证状态见 [STATUS.md](STATUS.md)。
+
 ## 预览
 
 ![Contact sheet](preview/contact-sheet.png)
