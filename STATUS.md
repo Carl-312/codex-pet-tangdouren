@@ -28,11 +28,23 @@ Last verified: 2026-05-09
   - row 7: `running`, 6 frames
   - row 8: `review`, 6 frames
 
-## Latest Fix
+## Current Animation QA
 
-The previous `running-right` row had a too-wide crop envelope and could appear as stacked layers during app playback. That row remains fixed and was not visually changed in the latest pass.
+All 9 states load and play from the current atlas. The current package keeps `jumping`, `running-right`, and `running-left` visually unchanged from the known-good package, and strengthens `waving`, `running`, and `review` so they are less likely to be mistaken for static frames.
 
-The latest pass focused on states that could be mistaken for static or semantically similar animations. `waving`, `running`, and `review` were conservatively repaired by reusing existing generated frames with stronger within-cell motion. `jumping`, `running-right`, and `running-left` were left visually unchanged.
+Motion distinction scores from the latest frame-difference pass:
+
+```text
+idle           12  low, intentionally subtle
+running-right  22  moderate
+running-left   22  moderate
+waving         29  clear
+jumping        26  moderate
+failed         34  clear
+waiting        19  moderate
+running        36  clear
+review         19  moderate
+```
 
 ## Verification
 
@@ -43,7 +55,6 @@ Latest local checks passed:
 - Unused cells: 15/15 fully transparent.
 - Browser/WebP decode: `1536x1872`, RGBA-capable; unused cell alpha sampled as `0`.
 - Browser preview: all 9 states load from `spritesheet.webp` using `192x208` background-position cropping.
-- Motion scores after latest pass: `waving` 29, `running` 36, `review` 19, `waiting` 19, `idle` 12.
 - Local install verified at `C:\Users\Carl\.codex\pets\tangdouren\`.
 
 Preview files:
